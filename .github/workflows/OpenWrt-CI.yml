@@ -1,6 +1,6 @@
 name: build-openwrt-Lean
 
-on:
+on: [push]
 # release:
 #   types: published
 # push:
@@ -8,8 +8,8 @@ on:
 #     - master
 #   paths:
 #     - 'Lean'
-   schedule:
-     - cron: 0 18 * * 1
+#   schedule:
+#     - cron: 0 18 * * 1
 #   watch:
 #     types: started
   
