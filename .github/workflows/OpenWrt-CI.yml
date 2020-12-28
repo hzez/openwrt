@@ -16,8 +16,8 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  CONFIG_FILE: config-x86-Lean
-  DIY_SH: diy-x86-Lean.sh
+  CONFIG_FILE: config-x86-Lean-hzez
+  DIY_SH: diy-hzez-lean-x86.sh
   SSH_ACTIONS: false
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
@@ -49,15 +49,15 @@ jobs:
    
     - name: 导入自定义
       run: |
-        git clone https://github.com/sypopo/diy ./openwrt/diy/sypopo
-        mv ./openwrt/diy/sypopo/$CONFIG_FILE $(pwd)
-        mv ./openwrt/diy/sypopo/$DIY_SH $(pwd)
+        git clone https://github.com/hzez/diy ./openwrt/diy/hzez
+        mv ./openwrt/diy/hzez/$CONFIG_FILE $(pwd)
+        mv ./openwrt/diy/hzez/$DIY_SH $(pwd)
         df -h && pwd
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         chmod +x $DIY_SH && cd openwrt && ../$DIY_SH
     - name: SSH连接
-      uses: sypopo/debugger-action@master
+      uses: hzez/debugger-action@master
       if: env.SSH_ACTIONS == 'true'
         
     - name: 下载软件包
