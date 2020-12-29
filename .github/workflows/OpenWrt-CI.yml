@@ -17,7 +17,7 @@ on: [push]
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  CONFIG_FILE: config-x86-Lean-hzez
+  CONFIG_FILE: config-x86-Lean-hzez2
   DIY_SH: diy-hzez-lean-x86.sh
   SSH_ACTIONS: false
   UPLOAD_BIN_DIR: true
