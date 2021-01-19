@@ -46,7 +46,7 @@ jobs:
           sudo -E apt-get clean
         
     - name: 下载源码
-      run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt && cd openwrt && ./scripts/feeds clean && ./scripts/feeds update -a && ./scripts/feeds install -a
+      run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt && cd openwrt
    
     - name: 导入自定义
       run: |
@@ -64,7 +64,7 @@ jobs:
     - name: 下载软件包
       id: package
       run: |
-        cd openwrt && make defconfig && make download -j8
+        cd openwrt && ./scripts/feeds clean && ./scripts/feeds update -a && ./scripts/feeds install -a && make defconfig && make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
         
