@@ -10,7 +10,7 @@ on: [push]
 #   paths:
 #     - 'Lean'
 #   schedule:
-#     - cron: 1 18 * * 1
+#     - cron: 0 18 * * 1
 #   watch:
 #     types: started
   
