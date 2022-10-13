@@ -15,10 +15,10 @@ on: [push]
 #     types: started
   
 env:
-  REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_URL:  https://github.com/openwrt/openwrt
   REPO_BRANCH: master
-  CONFIG_FILE: config-x86-Lean-hzez2
-  DIY_SH: diy-hzez-lean-x86.sh
+  CONFIG_FILE: config-x86-offical-hzez
+  DIY_SH: diy-openwrt-offical.sh
   SSH_ACTIONS: false
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
@@ -106,5 +106,5 @@ jobs:
       uses: actions/upload-artifact@master
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
-        name: OpenWrt-x86-Lean
+        name: OpenWrt-x86-Offical
         path: ${{ env.FIRMWARE }}
