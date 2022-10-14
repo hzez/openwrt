@@ -15,11 +15,10 @@ on: [push]
 #     types: started
   
 env:
-  REPO_URL:  
+  REPO_URL: https://github.com/openwrt/openwrt
   REPO_BRANCH: v22.03.1
-  CONFIG_FILE: config-x86-offical-hzhttps://github.com/openwrt/openwrtez
+  CONFIG_FILE: config-x86-offical-hzez
   DIY_SH: diy-openwrt-offical.sh
-  SSH_ACTIONS: false
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
   TZ: Asia/Shanghai
@@ -71,7 +70,25 @@ jobs:
       run: |
         cd openwrt
         echo -e "$(nproc) thread compile"
-        make -j$(nproc) || make -j1
+        make -j$(nproc) || make -j1 V=s
+        echo "::set-output name=status::success"
+        echo "======================="
+        echo "Space usage:"
+        echo "======================="
+        df -h
+        echo "======================="
+        du -h --max-depth=1 ./ --exclude=build_dir --exclude=bin
+        du -h --max-depth=1 ./build_dir
+        du -h --max-depth=1 ./bin
+        cp -f .config ./bin/targets/*/*/
+        
+    - name: 固件编译6h
+      id: compile6h
+      if: steps.compile.outputs.status != 'success'
+      run: |
+        cd openwrt
+        echo -e "$(nproc) thread compile"
+        make -j$(nproc) || make -j1 V=s
         echo "::set-output name=status::success"
         echo "======================="
         echo "Space usage:"
@@ -85,7 +102,7 @@ jobs:
         
     - name: 上传固件bin
       uses: actions/upload-artifact@master
-      if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
+      if: steps.compile.outputs.status == 'success' || steps.compile6h.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
         name: OpenWrt-x86-Offical-bin
         path: openwrt/bin
