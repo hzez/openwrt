@@ -70,6 +70,7 @@ jobs:
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
         find . -name *.html|xargs dos2unix
+        find . -name *.htm|xargs dos2unix
         
     - name: 固件编译
       id: compile
