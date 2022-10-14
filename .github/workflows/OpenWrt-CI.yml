@@ -15,9 +15,9 @@ on: [push]
 #     types: started
   
 env:
-  REPO_URL:  https://github.com/openwrt/openwrt
-  REPO_BRANCH: master
-  CONFIG_FILE: config-x86-offical-hzez
+  REPO_URL:  
+  REPO_BRANCH: v22.03.1
+  CONFIG_FILE: config-x86-offical-hzhttps://github.com/openwrt/openwrtez
   DIY_SH: diy-openwrt-offical.sh
   SSH_ACTIONS: false
   UPLOAD_BIN_DIR: true
@@ -57,9 +57,7 @@ jobs:
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         chmod +x $DIY_SH && cd openwrt && ../$DIY_SH
-    - name: SSH连接
-      uses: hzez/debugger-action@main
-      if: env.SSH_ACTIONS == 'true'
+
         
     - name: 下载软件包
       id: package
@@ -73,7 +71,7 @@ jobs:
       run: |
         cd openwrt
         echo -e "$(nproc) thread compile"
-        make -j$(nproc) || make -j1 V=s
+        make -j$(nproc) || make -j1
         echo "::set-output name=status::success"
         echo "======================="
         echo "Space usage:"
